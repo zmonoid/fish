@@ -92,8 +92,6 @@ def fit(args, network, data_loader, batch_end_callback=None):
         else:
             variable_param_names.append(name)
 
-    print fix_param_names
-    print variable_param_names
 
     model = mx.mod.Module(
         symbol = network,
@@ -109,17 +107,19 @@ def fit(args, network, data_loader, batch_end_callback=None):
     else:
         batch_end_callback = []
     batch_end_callback.append(mx.callback.Speedometer(args.batch_size, 50))
+    batch_end_callback.append(mx.callback.ProgressBar(args.num_examples * 1.0/ args.batch_size))
 
+    epoch_end_callback = [checkpoint]
     model.fit(train,
             eval_data = val,
-            optimizer_params = {'learning_rate':0.01, 'momentum': 0.9},
+            optimizer_params = {"learning_rate":args.lr, "momentum":0.9},
             num_epoch=args.num_epochs,
             arg_params = model_args['arg_params'],
             aux_params = model_args['aux_params'],
             initializer = mx.init.Xavier(factor_type="in", magnitude=2.34),
             allow_missing = True,
             batch_end_callback = batch_end_callback,
-            epoch_end_callback = checkpoint,
+            epoch_end_callback = epoch_end_callback,
             eval_metric = eval_metrics)
 
 

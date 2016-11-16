@@ -46,5 +46,10 @@ prob_mod = mx.model.FeedForward(
 
 
 prob = prob_mod.predict(test)
+for _ in range(5):
+    test.reset()
+    print _
+    prob += prob_mod.predict(test)
+prob /= 6
 print prob.shape
-np.save('./data/prob_%s' % args.gpus, prob)
+np.save('./data/out.npy', prob)

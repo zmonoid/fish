@@ -74,7 +74,6 @@ def get_iterator(args, kv):
         random_h    = 36,
         random_s    = 50,
         random_l    = 50,
-        #label_name  = 'svm_label',
         max_rotate_angle    = 10,
         num_parts   = kv.num_workers,
         part_index  = kv.rank)
