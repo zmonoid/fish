@@ -12,7 +12,7 @@ parser.add_argument(
     default='inception-bn',
     choices=[
         'alexnet', 'googlenet', 'inception-bn', 'inception-v3', 'resnet-50',
-        'resnet-101'
+        'resnet-101', 'vgg'
     ],
     help='the cnn to use')
 parser.add_argument(

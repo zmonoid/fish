@@ -2,8 +2,8 @@
 
 DATASHAPE=256
 CROPSHAPE=224
-NETWORK=resnet-101
-LOADMODEL=models/resnet-101
+NETWORK=vgg
+LOADMODEL=models/vgg19
 
 CLASSES=$(find ./data/train -mindepth 1 -type d | wc -l)
 echo found number of classes: $CLASSES
