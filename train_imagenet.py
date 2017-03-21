@@ -16,6 +16,14 @@ parser.add_argument(
     ],
     help='the cnn to use')
 parser.add_argument(
+    '--aug-level',
+    type=int,
+    default=3,
+    choices=[1, 2, 3],
+    help='level 1: use only random crop and random mirror\n'
+    'level 2: add scale/aspect/hsv augmentation based on level 1\n'
+    'level 3: add rotation/shear augmentation based on level 2')
+parser.add_argument(
     '--data-dir', type=str, required=True, help='the input data directory')
 parser.add_argument(
     '--model-prefix', type=str, help='the prefix of the model to load')
@@ -98,27 +106,33 @@ def get_iterator(args, kv):
     data_shape = (3, args.data_shape, args.data_shape)
     train = mx.io.ImageRecordIter(
         path_imgrec=os.path.join(args.data_dir, args.train_dataset),
-        mean_r=123.68,
-        mean_g=116.779,
-        mean_b=103.939,
+        #mean_r=123.68,
+        #mean_g=116.779,
+        #mean_b=103.939,
         data_shape=data_shape,
         batch_size=args.batch_size,
         #mean_img    = os.path.join(args.data_dir, "mean_%d.bin" % args.data_shape),
-        rand_crop=True,
+        pad=0,
+        fill=127,
+        #max_random_scale=1.0,  # 480 with imagnet, 32 with cifar10
+        #min_random_scale=1.0 if args.aug_level == 1 else 0.533,  # 256.0/480.0
+        max_aspect_ratio=0 if args.aug_level == 1 else 0.25,
+        random_h=0 if args.aug_level == 1 else 36,  # 0.4*90
+        random_s=0 if args.aug_level == 1 else 50,  # 0.4*127
+        random_l=0 if args.aug_level == 1 else 50,  # 0.4*127
+        max_rotate_angle=0 if args.aug_level <= 2 else 10,
+        max_shear_ratio=0 if args.aug_level <= 2 else 0.1,
         rand_mirror=True,
+        rand_crop=True,
         shuffle=True,
-        random_h=36,
-        random_s=50,
-        random_l=50,
-        max_rotate_angle=10,
         num_parts=kv.num_workers,
         part_index=kv.rank)
 
     val = mx.io.ImageRecordIter(
         path_imgrec=os.path.join(args.data_dir, args.val_dataset),
-        mean_r=123.68,
-        mean_g=116.779,
-        mean_b=103.939,
+        #mean_r=123.68,
+        #mean_g=116.779,
+        #mean_b=103.939,
         #label_name  = 'svm_label',
         #rand_crop   = False,
         rand_mirror=False,

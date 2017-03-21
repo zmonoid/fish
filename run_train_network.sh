@@ -1,9 +1,9 @@
 #! /bin/bash
 
-DATASHAPE=256
-CROPSHAPE=224
-NETWORK=vgg
-LOADMODEL=models/vgg19
+DATASHAPE=337
+CROPSHAPE=299
+NETWORK=inception-v3
+LOADMODEL=models/Inception-7
 
 CLASSES=$(find ./data/train -mindepth 1 -type d | wc -l)
 echo found number of classes: $CLASSES
@@ -35,4 +35,4 @@ python train_imagenet.py \
         --model-prefix ${LOADMODEL} \
         --finetune True \
         --finetune-scale 10 \
-        --load-epoch 0
+        --load-epoch 1

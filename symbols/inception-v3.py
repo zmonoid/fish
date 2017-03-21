@@ -67,7 +67,7 @@ def Inception7A(data, num_1x1, num_3x3_red, num_3x3_1, num_3x3_2, num_5x5_red,
         name=('%s_pool_%s_pool' % (pool, name)))
     cproj = Conv(pooling, proj, name=('%s_tower_2' % name), suffix='_conv')
     concat = mx.sym.Concat(
-        * [tower_1x1, tower_5x5, tower_3x3, cproj],
+        *[tower_1x1, tower_5x5, tower_3x3, cproj],
         name='ch_concat_%s_chconcat' % name)
     return concat
 
@@ -108,8 +108,7 @@ def Inception7B(data, num_3x3, num_d3x3_red, num_d3x3_1, num_d3x3_2, pool,
         pool_type="max",
         name=('max_pool_%s_pool' % name))
     concat = mx.sym.Concat(
-        * [tower_3x3, tower_d3x3, pooling],
-        name='ch_concat_%s_chconcat' % name)
+        *[tower_3x3, tower_d3x3, pooling], name='ch_concat_%s_chconcat' % name)
     return concat
 
 
@@ -184,7 +183,7 @@ def Inception7C(data, num_1x1, num_d7_red, num_d7_1, num_d7_2, num_q7_red,
         suffix='_conv')
     # concat
     concat = mx.sym.Concat(
-        * [tower_1x1, tower_d7, tower_q7, cproj],
+        *[tower_1x1, tower_d7, tower_q7, cproj],
         name='ch_concat_%s_chconcat' % name)
     return concat
 
@@ -238,7 +237,7 @@ def Inception7D(data, num_3x3_red, num_3x3, num_d7_3x3_red, num_d7_1, num_d7_2,
         name=('%s_pool_%s_pool' % (pool, name)))
     # concat
     concat = mx.sym.Concat(
-        * [tower_3x3, tower_d7_3x3, pooling],
+        *[tower_3x3, tower_d7_3x3, pooling],
         name='ch_concat_%s_chconcat' % name)
     return concat
 
@@ -307,7 +306,7 @@ def Inception7E(data, num_1x1, num_d3_red, num_d3_1, num_d3_2, num_3x3_d3_red,
         suffix='_conv')
     # concat
     concat = mx.sym.Concat(
-        * [
+        *[
             tower_1x1, tower_d3_a, tower_d3_b, tower_3x3_d3_a, tower_3x3_d3_b,
             cproj
         ],
@@ -346,19 +345,19 @@ def get_symbol(num_classes=1000, **kwargs):
     in3d = Inception7B(in3c, 384, 64, 96, 96, "max", "mixed_3")
     # stage 4
     in4a = Inception7C(in3d, 192, 128, 128, 192, 128, 128, 128, 128, 192,
-                       "avg", 192, "mixed_4")
+                       "avg", 192, "mixed_4_")
     in4b = Inception7C(in4a, 192, 160, 160, 192, 160, 160, 160, 160, 192,
-                       "avg", 192, "mixed_5")
+                       "avg", 192, "mixed_5_")
     in4c = Inception7C(in4b, 192, 160, 160, 192, 160, 160, 160, 160, 192,
-                       "avg", 192, "mixed_6")
+                       "avg", 192, "mixed_6_")
     in4d = Inception7C(in4c, 192, 192, 192, 192, 192, 192, 192, 192, 192,
-                       "avg", 192, "mixed_7")
-    in4e = Inception7D(in4d, 192, 320, 192, 192, 192, 192, "max", "mixed_8")
+                       "avg", 192, "mixed_7_")
+    in4e = Inception7D(in4d, 192, 320, 192, 192, 192, 192, "max", "mixed_8_")
     # stage 5
     in5a = Inception7E(in4e, 320, 384, 384, 384, 448, 384, 384, 384, "avg",
-                       192, "mixed_9")
+                       192, "mixed_9_")
     in5b = Inception7E(in5a, 320, 384, 384, 384, 448, 384, 384, 384, "max",
-                       192, "mixed_10")
+                       192, "mixed_10_")
     # pool
     pool = mx.sym.Pooling(
         data=in5b,

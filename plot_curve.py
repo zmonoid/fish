@@ -90,7 +90,7 @@ if __name__ == "__main__":
     parser.add_argument(
         '--logs',
         type=str,
-        default="resnet-50.log",
+        default="checkpoints",
         help='the path of log file, --logs=resnet-50.log,resnet-101.log')
     parser.add_argument(
         '--out',
