@@ -350,19 +350,19 @@
     }, 
     {
       "op": "null", 
-      "name": "fc6_weight", 
+      "name": "fc6__weight", 
       "attr": {"num_hidden": "4096"}, 
       "inputs": []
     }, 
     {
       "op": "null", 
-      "name": "fc6_bias", 
+      "name": "fc6__bias", 
       "attr": {"num_hidden": "4096"}, 
       "inputs": []
     }, 
     {
       "op": "FullyConnected", 
-      "name": "fc6", 
+      "name": "fc6_", 
       "attr": {"num_hidden": "4096"}, 
       "inputs": [[38, 0, 0], [39, 0, 0], [40, 0, 0]]
     }, 
@@ -380,19 +380,19 @@
     }, 
     {
       "op": "null", 
-      "name": "fc7_weight", 
+      "name": "fc7__weight", 
       "attr": {"num_hidden": "4096"}, 
       "inputs": []
     }, 
     {
       "op": "null", 
-      "name": "fc7_bias", 
+      "name": "fc7__bias", 
       "attr": {"num_hidden": "4096"}, 
       "inputs": []
     }, 
     {
       "op": "FullyConnected", 
-      "name": "fc7", 
+      "name": "fc7_", 
       "attr": {"num_hidden": "4096"}, 
       "inputs": [[43, 0, 0], [44, 0, 0], [45, 0, 0]]
     }, 

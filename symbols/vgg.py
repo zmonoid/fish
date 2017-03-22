@@ -90,11 +90,11 @@ def get_symbol(num_classes, **kwargs):
         name="pool5")
     # group 6
     flatten = mx.symbol.Flatten(data=pool5, name="flatten")
-    fc6 = mx.symbol.FullyConnected(data=flatten, num_hidden=4096, name="fc6")
+    fc6 = mx.symbol.FullyConnected(data=flatten, num_hidden=4096, name="fc6_")
     relu6 = mx.symbol.Activation(data=fc6, act_type="relu", name="relu6")
     drop6 = mx.symbol.Dropout(data=relu6, p=0.5, name="drop6")
     # group 7
-    fc7 = mx.symbol.FullyConnected(data=drop6, num_hidden=4096, name="fc7")
+    fc7 = mx.symbol.FullyConnected(data=drop6, num_hidden=4096, name="fc7_")
     relu7 = mx.symbol.Activation(data=fc7, act_type="relu", name="relu7")
     drop7 = mx.symbol.Dropout(data=relu7, p=0.5, name="drop7")
     # output

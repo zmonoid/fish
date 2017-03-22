@@ -109,8 +109,11 @@ def fit(args, network, data_loader, batch_end_callback=None):
         train,
         eval_data=val,
         optimizer='nag',
-        optimizer_params={"learning_rate": args.lr,
-                          "momentum": 0.9},
+        optimizer_params={
+            "learning_rate": args.lr,
+            "momentum": 0.9,
+            "lr_scheduler": model_args['lr_scheduler']
+        },
         num_epoch=args.num_epochs,
         arg_params=model_args['arg_params'],
         aux_params=model_args['aux_params'],
